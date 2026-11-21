@@ -9,8 +9,10 @@ export function safeNextPath(next: string | null | undefined, fallback = '/'): s
   if (!next || !next.startsWith('/') || next.startsWith('//') || next.startsWith('/\\')) return fallback;
   try {
     const url = new URL(next, BASE);
-    if (url.origin !== BASE) return fallback;
-    return `${url.pathname}${url.search}${url.hash}`;
+    const path = `${url.pathname}${url.search}${url.hash}`;
+    // Parsing resolves dot-segments, so /..//x normalises to //x: check the result, not just the input.
+    if (url.origin !== BASE || path.startsWith('//') || path.startsWith('/\\')) return fallback;
+    return path;
   } catch {
     return fallback;
   }

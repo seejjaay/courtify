@@ -1,11 +1,20 @@
 import Link from 'next/link';
 import { buttonVariants } from '@/components/ui/button';
-import { getViewer } from '@/lib/auth/session';
+import { getViewer, type Viewer } from '@/lib/auth/session';
 import { UserMenu } from './user-menu';
 
-/** The header's right side: Sign in, or the account menu. Reads the session, so render it inside Suspense. */
+/**
+ * The header's right side: Sign in, or the account menu. Reads the session, so render it inside
+ * Suspense. A failed lookup degrades to the Sign in link rather than taking the page down.
+ */
 export async function AuthSlot() {
-  const viewer = await getViewer();
+  let viewer: Viewer | null = null;
+  try {
+    viewer = await getViewer();
+  } catch {
+    viewer = null;
+  }
+
   if (!viewer) {
     return (
       <Link href="/login" className={buttonVariants({ size: 'sm' })}>

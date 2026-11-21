@@ -12,6 +12,11 @@ it.each([
   [null, '/'],
   // URL parsers drop tabs and newlines, which turns this into //evil.example.
   ['/\t/evil.example', '/'],
+  // Dot-segments normalise away and leave a protocol-relative //evil.example behind.
+  ['/..//evil.example', '/'],
+  ['/.//evil.example', '/'],
+  ['/%2e%2e//evil.example', '/'],
+  ['/a/..//evil.example', '/'],
 ])('safeNextPath(%s) → %s', (input, expected) => expect(safeNextPath(input)).toBe(expected));
 
 it('uses the given fallback', () => {
