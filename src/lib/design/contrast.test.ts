@@ -14,7 +14,7 @@ describe('contrastRatio', () => {
 const TEXT_PAIRS: [string, string][] = [
   ['ink', 'stucco'], ['ink', 'chalk'], ['ink', 'sand'], ['ink', 'greige'], ['ink', 'clay'],
   ['ink-soft', 'stucco'], ['ink-soft', 'chalk'], ['clay-ink', 'stucco'], ['clay-ink', 'chalk'],
-  ['chalk', 'ink'], ['chalk', 'danger'], ['success', 'stucco'], ['warning', 'stucco'], ['danger', 'stucco'],
+  ['chalk', 'ink'], ['sand', 'ink'], ['clay', 'ink'], ['chalk', 'danger'], ['success', 'stucco'], ['warning', 'stucco'], ['danger', 'stucco'],
 ];
 
 describe('palette text pairs', () => {

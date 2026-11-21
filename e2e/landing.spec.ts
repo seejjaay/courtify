@@ -31,6 +31,14 @@ test('how it works lists the three steps', async ({ page }) => {
   await expect(steps.nth(2)).toContainText('Play');
 });
 
+test('owners section is labelled as a product preview and links onward', async ({ page }) => {
+  await page.goto('/');
+  const owners = page.getByRole('region', { name: 'Run your day from one screen.' });
+  await expect(owners.getByText('Product preview')).toBeVisible();
+  await expect(owners.getByRole('link', { name: 'List your venue' })).toHaveAttribute('href', '/owner/new');
+  await expect(owners.getByRole('link', { name: 'See how it works for venues' })).toHaveAttribute('href', '/for-venues');
+});
+
 // Review Focus 3: small Android phones.
 test('fits a 320px phone', async ({ page }) => {
   await page.setViewportSize({ width: 320, height: 640 });

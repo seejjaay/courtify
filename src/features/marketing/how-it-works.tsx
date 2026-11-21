@@ -12,7 +12,7 @@ export function HowItWorks() {
   return (
     <section data-scene="serve" aria-labelledby="how-title" className="bg-chalk px-4 py-20 sm:px-6 md:py-32">
       <div className="mx-auto flex w-full max-w-6xl flex-col gap-12 md:gap-20">
-        <h2 id="how-title" className="max-w-xl font-display text-[clamp(2rem,5vw,3.75rem)] leading-[1] text-ink">
+        <h2 id="how-title" className="max-w-xl font-display text-[clamp(2rem,5vw,3.75rem)] leading-none text-ink">
           From search to serve.
         </h2>
         <div data-serve-row className="relative pl-10 md:pt-16 md:pl-0">

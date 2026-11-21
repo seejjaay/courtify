@@ -62,7 +62,7 @@ export async function HeroCourt() {
           ))}
         </h1>
 
-        <div className="hero-court relative mt-5 overflow-hidden rounded-[14px] bg-clay md:mt-8">
+        <div className="hero-court relative mt-5 overflow-hidden rounded-card bg-clay md:mt-8">
           <div aria-hidden="true">
             {LINES.map((line, i) => (
               <span key={i} className={cn('court-line chalk-line', line.kind)} style={lineStyle(line)} />

@@ -59,6 +59,28 @@ defineScene('serve', (section, fromBelow) => {
   });
 });
 
+// The day strip: the light arrives hour by hour as the strip scrolls into view.
+defineScene('daylight', (section, fromBelow) => {
+  if (!fromBelow) return;
+  gsap.from(section.querySelectorAll('[data-light]'), {
+    opacity: 0,
+    duration: 0.5,
+    ease: 'power1.out',
+    stagger: { each: 0.025, grid: 'auto', from: 'start', axis: 'x' },
+    scrollTrigger: { trigger: section, start: 'top 80%', once: true },
+  });
+});
+
+// The dashboard preview: numbers flip in, bookings drop into the list, the proof flips to Verified.
+defineScene('dashboard', (section, fromBelow) => {
+  if (!fromBelow) return;
+  const timeline = gsap.timeline({ scrollTrigger: { trigger: section, start: 'top 75%', once: true } });
+  timeline
+    .from(section.querySelectorAll('[data-flip]'), { rotateX: -90, opacity: 0, transformOrigin: '50% 0%', duration: 0.5, stagger: 0.1, ease: 'back.out(1.6)' })
+    .from(section.querySelectorAll('[data-drop]'), { y: -24, opacity: 0, duration: 0.45, stagger: 0.12, ease: 'power2.out' }, '-=0.2')
+    .from(section.querySelector('[data-verify]'), { rotateX: 90, duration: 0.4, ease: 'back.out(2)' }, '+=0.2');
+});
+
 /**
  * Sets up every scene on the page and returns a cleanup. Sections are finished in the HTML;
  * a scene only sets "from" states for sections that are still below the viewport, so nothing
