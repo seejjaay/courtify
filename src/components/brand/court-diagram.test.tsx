@@ -18,7 +18,13 @@ it.each(SPORTS)('%s renders an accessible 16-line diagram', (sport) => {
 it.each(SPORTS)('%s lines stay inside the court', (sport) => {
   const { width, length, lines } = COURT_SPECS[sport];
   for (const [x1, y1, x2, y2] of lines) {
-    for (const x of [x1, x2]) expect(x).toBeGreaterThanOrEqual(0), expect(x).toBeLessThanOrEqual(width);
-    for (const y of [y1, y2]) expect(y).toBeGreaterThanOrEqual(0), expect(y).toBeLessThanOrEqual(length);
+    for (const x of [x1, x2]) {
+      expect(x).toBeGreaterThanOrEqual(0);
+      expect(x).toBeLessThanOrEqual(width);
+    }
+    for (const y of [y1, y2]) {
+      expect(y).toBeGreaterThanOrEqual(0);
+      expect(y).toBeLessThanOrEqual(length);
+    }
   }
 });
