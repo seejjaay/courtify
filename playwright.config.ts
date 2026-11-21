@@ -10,6 +10,8 @@ export default defineConfig({
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 1 : 0,
   reporter: process.env.CI ? 'github' : 'list',
+  // A production build under parallel workers can take a few seconds on the first server action.
+  expect: { timeout: 10_000 },
   use: {
     baseURL: BASE_URL,
     trace: 'retain-on-failure',
