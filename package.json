@@ -9,7 +9,12 @@
     "lint": "eslint",
     "test": "node scripts/vitest.mjs run --project unit",
     "test:integration": "node scripts/vitest.mjs run --project integration",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "db:start": "npx supabase start",
+    "db:stop": "npx supabase stop",
+    "db:reset": "npx supabase db reset",
+    "db:test": "npx supabase test db",
+    "db:types": "npx supabase gen types typescript --local > src/lib/supabase/types.ts"
   },
   "dependencies": {
     "class-variance-authority": "^0.7.1",
@@ -37,6 +42,7 @@
     "eslint": "^9",
     "eslint-config-next": "16.4.6",
     "jsdom": "^31.0.1",
+    "supabase": "^3.2.0",
     "tailwindcss": "4.3.3",
     "typescript": "^5",
     "vitest": "^5.1.1"
