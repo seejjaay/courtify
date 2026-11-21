@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { CourtDiagram } from '@/components/brand/court-diagram';
 import { SiteFooter } from '@/components/shell/site-footer';
+import { HeaderAuth } from '@/components/shell/header-auth';
 import { SiteHeader } from '@/components/shell/site-header';
 import { buttonVariants } from '@/components/ui/button';
 
@@ -11,7 +12,7 @@ export const metadata: Metadata = { title: 'Page not found' };
 export default function NotFound() {
   return (
     <>
-      <SiteHeader />
+      <SiteHeader authSlot={<HeaderAuth />} />
       <main
         id="main"
         tabIndex={-1}

@@ -16,7 +16,7 @@ test('unknown URL shows the 404 inside the site shell', async ({ page }) => {
   await expect(page.getByRole('link', { name: 'Find courts' })).toBeVisible();
 });
 
-// /legal/[doc] is a partial prerender with no dynamicParams under Cache Components; unknown docs must still 404.
+// Only /legal/terms and /legal/privacy exist; any other doc must be a real 404.
 test('unknown legal doc is a real 404', async ({ page }) => {
   const res = await page.goto('/legal/cookies');
   expect(res?.status()).toBe(404);

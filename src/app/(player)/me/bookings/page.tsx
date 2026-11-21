@@ -6,7 +6,7 @@ import { buttonVariants } from '@/components/ui/button';
 
 export const metadata: Metadata = { title: 'My bookings' };
 
-/** M0 landing for signed-in players; M3 lists upcoming and past bookings here. */
+/** M0 landing for signed-in players; M4 lists upcoming and past bookings here. */
 export default function MyBookingsPage() {
   return (
     <div className="mx-auto flex w-full max-w-3xl flex-col gap-8 px-4 py-16 sm:px-6">

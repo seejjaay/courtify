@@ -4,7 +4,7 @@ import { EmptyState } from '@/components/states/empty-state';
 
 export const metadata: Metadata = { title: 'For venues' };
 
-/** M0 placeholder; M2 brings the owner pitch and pricing. */
+/** M0 placeholder; M1 brings the owner pitch and pricing. */
 export default function ForVenuesPage() {
   return (
     <div className="mx-auto flex w-full max-w-3xl flex-col gap-8 px-4 py-16 sm:px-6">

@@ -4,7 +4,7 @@ import { EmptyState } from '@/components/states/empty-state';
 
 export const metadata: Metadata = { title: 'Find courts' };
 
-/** M0 placeholder; M1 brings search with filters, list and map. */
+/** M0 placeholder; M2 brings search with filters, list and map. */
 export default function CourtsPage() {
   return (
     <div className="mx-auto flex w-full max-w-3xl flex-col gap-8 px-4 py-16 sm:px-6">

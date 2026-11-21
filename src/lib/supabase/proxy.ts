@@ -1,4 +1,5 @@
 import { createServerClient } from '@supabase/ssr';
+import type { SupabaseClient } from '@supabase/supabase-js';
 import { NextResponse, type NextRequest } from 'next/server';
 import { publicEnv } from './env';
 import type { Database } from './types';
@@ -7,7 +8,9 @@ import type { Database } from './types';
  * Refreshes the Supabase session on every matched request and returns the response that
  * carries the refreshed cookies, plus the signed-in user's id (from verified JWT claims).
  */
-export async function updateSession(request: NextRequest): Promise<{ response: NextResponse; userId: string | null }> {
+export async function updateSession(
+  request: NextRequest,
+): Promise<{ response: NextResponse; userId: string | null; supabase: SupabaseClient<Database> }> {
   let response = NextResponse.next({ request });
 
   const supabase = createServerClient<Database>(publicEnv.NEXT_PUBLIC_SUPABASE_URL, publicEnv.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY, {
@@ -27,5 +30,5 @@ export async function updateSession(request: NextRequest): Promise<{ response: N
 
   // Nothing may run between creating the client and getClaims(): it's what refreshes the session.
   const { data } = await supabase.auth.getClaims();
-  return { response, userId: data?.claims?.sub ?? null };
+  return { response, userId: data?.claims?.sub ?? null, supabase };
 }
