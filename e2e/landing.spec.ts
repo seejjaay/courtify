@@ -22,6 +22,15 @@ test('List your venue reaches the owner flow', async ({ page }) => {
   await expect(page).toHaveURL(/\/login\?next=%2Fowner%2Fnew$/);
 });
 
+test('how it works lists the three steps', async ({ page }) => {
+  await page.goto('/');
+  const steps = page.getByRole('region', { name: 'From search to serve.' }).getByRole('listitem');
+  await expect(steps).toHaveCount(3);
+  await expect(steps.nth(0)).toContainText('Search');
+  await expect(steps.nth(1)).toContainText('Pick a slot');
+  await expect(steps.nth(2)).toContainText('Play');
+});
+
 // Review Focus 3: small Android phones.
 test('fits a 320px phone', async ({ page }) => {
   await page.setViewportSize({ width: 320, height: 640 });

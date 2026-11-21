@@ -1,4 +1,5 @@
 import { HeroCourt } from '@/features/marketing/hero-court';
+import { HowItWorks } from '@/features/marketing/how-it-works';
 import { MotionBoot } from '@/features/marketing/motion/boot';
 import { SportsSwitcher } from '@/features/marketing/sports-switcher';
 
@@ -15,6 +16,7 @@ export default function HomePage() {
           <SportsSwitcher />
         </div>
       </section>
+      <HowItWorks />
       <MotionBoot />
     </>
   );
