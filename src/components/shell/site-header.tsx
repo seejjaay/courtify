@@ -1,4 +1,3 @@
-import type { Route } from 'next';
 import Link from 'next/link';
 import type { ReactNode } from 'react';
 import { Logo } from '@/components/brand/logo';
@@ -25,8 +24,7 @@ export function SiteHeader({ authSlot }: { authSlot?: ReactNode }) {
         </nav>
         <div className="ml-auto flex items-center">
           {authSlot ?? (
-            // /login arrives in Task 17; the cast keeps typedRoutes happy until then.
-            <Link href={'/login' as Route} className={buttonVariants({ size: 'sm' })}>
+            <Link href="/login" className={buttonVariants({ size: 'sm' })}>
               Sign in
             </Link>
           )}

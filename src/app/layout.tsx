@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { FlashToast } from '@/components/shell/flash-toast';
 import { SkipLink } from '@/components/shell/skip-link';
 import { Toaster } from '@/components/ui/sonner';
 import { fontVariables } from './fonts';
@@ -16,6 +17,7 @@ export default function RootLayout({ children }: LayoutProps<'/'>) {
         <SkipLink />
         {children}
         <Toaster position="top-center" />
+        <FlashToast />
       </body>
     </html>
   );
