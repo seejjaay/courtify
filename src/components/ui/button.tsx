@@ -1,7 +1,7 @@
 import * as React from "react"
 import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "cn"
-import { Slot } from "radix-ui"
+import { Slot } from "@radix-ui/react-slot"
 
 // Courtify: pill buttons, ink labels on clay (never white on clay), 40px default touch target.
 const buttonVariants = cva(
@@ -44,7 +44,7 @@ function Button({
   VariantProps<typeof buttonVariants> & {
     asChild?: boolean
   }) {
-  const Comp = asChild ? Slot.Root : "button"
+  const Comp = asChild ? Slot : "button"
 
   return (
     <Comp

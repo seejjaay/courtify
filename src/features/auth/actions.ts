@@ -5,7 +5,8 @@ import { redirect } from 'next/navigation';
 import { safeNextPath } from '@/lib/auth/redirect';
 import { setFlash } from '@/lib/flash';
 import { createServerSupabase } from '@/lib/supabase/server';
-import { fieldErrors, forgotSchema, resetSchema, signInSchema, signUpSchema, type FormState } from './schemas';
+import type { FormState } from './form-state';
+import { fieldErrors, forgotSchema, resetSchema, signInSchema, signUpSchema } from './schemas';
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000';
 const TRY_AGAIN = 'Something went wrong. Please try again.';

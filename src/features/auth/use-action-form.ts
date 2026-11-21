@@ -1,7 +1,7 @@
 'use client';
 
 import { startTransition, useActionState, type FormEvent } from 'react';
-import type { FormState } from './schemas';
+import type { FormState } from './form-state';
 
 type Action = (prev: FormState, formData: FormData) => Promise<FormState>;
 

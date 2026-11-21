@@ -5,6 +5,11 @@ const nextConfig: NextConfig = {
   cacheComponents: true,
   typedRoutes: true,
   partialPrefetching: true,
+  experimental: {
+    // shadcn imports primitives from the `radix-ui` barrel; without this, one `Slot` import pulls
+    // in many unrelated primitives (~27 KB gzipped) on every page.
+    optimizePackageImports: ['radix-ui'],
+  },
   turbopack: {
     rules: {
       "*.css": {

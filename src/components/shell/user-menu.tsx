@@ -12,7 +12,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { signOut } from '@/features/auth/actions';
-import { initialFormState } from '@/features/auth/schemas';
+import { initialFormState } from '@/features/auth/form-state';
 
 export type UserMenuViewer = { fullName: string; email: string | null; isAdmin: boolean; hasVenues: boolean };
 

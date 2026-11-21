@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { signIn } from './actions';
-import { initialFormState } from './schemas';
+import { initialFormState } from './form-state';
 
 const DEMO_ROLES = ['admin', 'owner', 'manager', 'staff', 'player'] as const;
 

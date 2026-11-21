@@ -2,7 +2,7 @@
 
 import { Button } from '@/components/ui/button';
 import { requestPasswordReset } from './actions';
-import { initialFormState } from './schemas';
+import { initialFormState } from './form-state';
 import { FormAlert, TextField } from './text-field';
 import { useActionForm } from './use-action-form';
 

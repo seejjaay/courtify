@@ -3,7 +3,7 @@
 import { Button } from '@/components/ui/button';
 import { signIn } from './actions';
 import { PasswordField } from './password-field';
-import { initialFormState } from './schemas';
+import { initialFormState } from './form-state';
 import { FormAlert, TextField } from './text-field';
 import { useActionForm } from './use-action-form';
 

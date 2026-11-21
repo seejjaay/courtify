@@ -3,7 +3,8 @@
 import type { Route } from 'next';
 import { useRouter } from 'next/navigation';
 import { useEffect, useRef, type FormEvent } from 'react';
-import { Button } from '@/components/ui/button';
+import { buttonVariants } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 
 /** Today's date in Manila as YYYY-MM-DD, whatever timezone the device is set to. */
 export function todayInManila(now: Date = new Date()): string {
@@ -57,9 +58,9 @@ export function HeroSearch({ sports }: { sports: { slug: string; name: string }[
         Date
       </label>
       <input id="hero-date" ref={dateRef} name="date" type="date" className={field} />
-      <Button type="submit" size="lg" className="h-11 bg-ink text-chalk hover:bg-ink/90">
+      <button type="submit" className={cn(buttonVariants({ size: 'lg' }), 'h-11 bg-ink text-chalk hover:bg-ink/90')}>
         Search courts
-      </Button>
+      </button>
     </form>
   );
 }

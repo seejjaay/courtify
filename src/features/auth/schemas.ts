@@ -1,7 +1,5 @@
 import { z } from 'zod';
 
-export type FormState = { ok: boolean; message?: string; fieldErrors?: Record<string, string[]> };
-export const initialFormState: FormState = { ok: false };
 
 const email = z.string().trim().toLowerCase().pipe(z.email('Enter a valid email address.'));
 const newPassword = z.string().min(8, 'Use at least 8 characters.').max(72, 'Use at most 72 characters.');

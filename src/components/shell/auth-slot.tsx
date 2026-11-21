@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { buttonVariants } from '@/components/ui/button';
 import { getViewer, type Viewer } from '@/lib/auth/session';
-import { UserMenu } from './user-menu';
+import { UserMenuLazy as UserMenu } from './user-menu-lazy';
 
 /**
  * The header's right side: Sign in, or the account menu. Reads the session, so render it inside
