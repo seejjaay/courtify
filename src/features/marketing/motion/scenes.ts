@@ -1,6 +1,28 @@
 // Loaded only through MotionBoot's dynamic import, after LCP. Never import this statically.
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import type { SportSlug } from '@/components/brand/court-specs';
+import { courtGeometry } from '../court-geometry';
+
+/** Re-draws a court SVG (see SportsSwitcher) as another sport, line by line. */
+export function morphCourt(svg: SVGSVGElement, to: SportSlug): void {
+  const g = courtGeometry(to);
+  const ease = 'power3.inOut';
+  gsap.to(svg.querySelector('[data-court-rect]'), { attr: g.rect, duration: 0.7, ease });
+  svg.querySelectorAll('[data-court-line]').forEach((line, i) => {
+    const [x1, y1, x2, y2] = g.lines[i]!;
+    gsap.to(line, { attr: { x1, y1, x2, y2 }, duration: 0.7, ease, delay: i * 0.015 });
+  });
+  const net = svg.querySelector('[data-court-net]');
+  if (net) {
+    gsap.to(net, {
+      attr: g.net ? { x1: g.net[0], y1: g.net[1], x2: g.net[2], y2: g.net[3] } : {},
+      opacity: g.net ? 1 : 0,
+      duration: 0.5,
+      ease,
+    });
+  }
+}
 
 /** A scene animates one `[data-scene]` section. `fromBelow` is false when the section was already on screen at boot. */
 type Scene = (section: HTMLElement, fromBelow: boolean) => void;
