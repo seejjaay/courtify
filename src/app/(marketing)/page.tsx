@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import { FinalCta } from '@/features/marketing/final-cta';
 import { HeroCourt } from '@/features/marketing/hero-court';
 import { HowItWorks } from '@/features/marketing/how-it-works';
@@ -6,6 +7,10 @@ import { OwnersSection } from '@/features/marketing/owners-section';
 import { Pricing } from '@/features/marketing/pricing';
 import { SportsSwitcher } from '@/features/marketing/sports-switcher';
 import { StatsBand } from '@/features/marketing/stats-band';
+
+export const metadata: Metadata = {
+  description: 'Find and book pickleball, badminton, tennis, padel, table tennis and squash courts near you. Venue owners: take bookings online and run the front desk from one screen.',
+};
 
 /** The landing: one platform, two sides of the net. Sections are added task by task (M1 plan). */
 export default function HomePage() {

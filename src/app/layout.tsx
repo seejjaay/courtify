@@ -6,6 +6,8 @@ import { fontVariables } from './fonts';
 import './globals.css';
 
 export const metadata: Metadata = {
+  // Resolves relative social-image URLs. Set NEXT_PUBLIC_SITE_URL in production.
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000'),
   title: { default: 'Courtify — Book racket courts near you', template: '%s · Courtify' },
   description: 'Find and book pickleball, badminton, tennis, padel, table tennis and squash courts.',
 };

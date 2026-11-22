@@ -9,7 +9,10 @@ import { MotionBoot } from '@/features/marketing/motion/boot';
 import { DashboardPreview } from '@/features/marketing/owners-section';
 import { Pricing } from '@/features/marketing/pricing';
 
-export const metadata: Metadata = { title: 'For venues' };
+export const metadata: Metadata = {
+  title: 'For venues',
+  description: 'List your court venue for free. Add Pro for online booking, GCash proof checking, front-desk check-in and analytics.',
+};
 
 const FEATURES = [
   { icon: LayoutDashboard, title: 'Today board', body: 'Every court and every hour for today, with who’s booked, who’s paid and who’s turned up.' },
