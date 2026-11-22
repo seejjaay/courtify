@@ -56,6 +56,19 @@ test('closing call to action offers both doors', async ({ page }) => {
   await expect(closing.getByRole('link', { name: 'List your venue' })).toHaveAttribute('href', '/owner/new');
 });
 
+test('for-venues answers the owner questions', async ({ page }) => {
+  await page.goto('/for-venues');
+  await expect(page.getByRole('heading', { level: 1, name: 'For venues' })).toBeVisible();
+  await expect(page.locator('summary')).toHaveCount(5);
+  for (const q of ['Is listing free?', 'What happens if Pro lapses?', 'Do players pay through Courtify?', 'Can my staff use it?', 'How long does setup take?']) {
+    await expect(page.locator('summary', { hasText: q })).toBeVisible();
+  }
+  await page.locator('summary', { hasText: 'What happens if Pro lapses?' }).click();
+  await expect(page.getByText('existing bookings').first()).toBeVisible();
+  await expect(page.getByRole('region', { name: 'Free to list. Pro when you want bookings.' })).toContainText('₱999');
+  await expect(page.getByRole('link', { name: 'List your venue' }).first()).toHaveAttribute('href', '/owner/new');
+});
+
 // Review Focus 3: small Android phones.
 test('fits a 320px phone', async ({ page }) => {
   await page.setViewportSize({ width: 320, height: 640 });
