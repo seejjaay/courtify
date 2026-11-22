@@ -77,3 +77,61 @@ test('fits a 320px phone', async ({ page }) => {
   await expect(hero(page).getByRole('heading', { name: 'Find a court tonight.' })).toBeInViewport();
   await expect(hero(page).getByRole('link', { name: 'List your venue' })).toBeInViewport();
 });
+
+// Review Focus 1: Messenger/FB in-app browsers and 3G, where scripts may never arrive.
+test('landing works without JavaScript', async ({ browser }) => {
+  const context = await browser.newContext({ javaScriptEnabled: false, baseURL: 'http://localhost:3107' });
+  const page = await context.newPage();
+  await page.goto('/');
+  await expect(hero(page).getByRole('heading', { name: 'Find a court tonight.' })).toBeVisible();
+  await expect(hero(page).getByRole('link', { name: 'List your venue' })).toBeVisible();
+
+  const pro = page.getByRole('article', { name: 'Pro' });
+  await expect(pro).toContainText('₱999');
+  await expect(pro).toContainText('₱9,990');
+
+  const panel = page.getByRole('tabpanel');
+  await expect(panel.getByRole('img', { name: 'Pickleball court' })).toBeVisible();
+  await expect(panel).toContainText('kitchen by the net');
+
+  await hero(page).getByRole('combobox', { name: 'Sport' }).selectOption('pickleball');
+  await hero(page).getByRole('textbox', { name: 'City' }).fill('Makati');
+  await hero(page).getByRole('button', { name: 'Search courts' }).click();
+  // A plain GET form can't drop empty fields (that needs JS), so an empty `date=` rides along. /courts must treat it as absent.
+  await expect(page).toHaveURL(/\/courts\?sport=pickleball&city=Makati&date=$/);
+  await context.close();
+});
+
+// Review Focus 2: reduced motion means the finished page, from the same markup.
+test('reduced motion shows the finished page', async ({ page }) => {
+  const errors: string[] = [];
+  page.on('console', (msg) => msg.type() === 'error' && errors.push(msg.text()));
+  page.on('pageerror', (error) => errors.push(error.message));
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.goto('/');
+  await page.waitForLoadState('load');
+  // Scroll through so any scroll-driven scene would have started.
+  await page.evaluate(async () => {
+    for (let y = 0; y < document.body.scrollHeight; y += 600) {
+      window.scrollTo(0, y);
+      await new Promise((resolve) => setTimeout(resolve, 30));
+    }
+  });
+  expect(await page.evaluate(() => document.getAnimations().length)).toBe(0);
+  const opacities = await page.$$eval('[data-scene]', (els) => els.map((el) => getComputedStyle(el).opacity));
+  expect(opacities.length).toBeGreaterThan(0);
+  expect(opacities.every((o) => o === '1')).toBe(true);
+  expect(errors).toEqual([]);
+});
+
+for (const path of ['/', '/for-venues', '/legal/terms', '/legal/privacy']) {
+  test(`no console errors on ${path}`, async ({ page }) => {
+    const errors: string[] = [];
+    page.on('console', (msg) => msg.type() === 'error' && errors.push(msg.text()));
+    page.on('pageerror', (error) => errors.push(error.message));
+    await page.goto(path);
+    await page.waitForLoadState('load');
+    await page.waitForTimeout(1500); // let the idle-started motion boot and run
+    expect(errors).toEqual([]);
+  });
+}

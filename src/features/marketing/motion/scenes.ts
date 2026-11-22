@@ -102,11 +102,25 @@ defineScene('cta-roll', (section, fromBelow) => {
  */
 export function startScenes(): () => void {
   gsap.registerPlugin(ScrollTrigger);
-  const context = gsap.context(() => {
-    for (const section of document.querySelectorAll<HTMLElement>('[data-scene]')) {
-      const scene = SCENES[section.dataset.scene ?? ''];
-      if (scene) scene(section, section.getBoundingClientRect().top > window.innerHeight);
-    }
+  const context = gsap.context(() => {});
+  let cancelled = false;
+
+  // Read every section's position in one pass, then set the scenes up one task at a time, so
+  // a slow phone never gets one long block of GSAP setup (a long task delays taps and scrolling).
+  const pending = [...document.querySelectorAll<HTMLElement>('[data-scene]')].flatMap((section) => {
+    const scene = SCENES[section.dataset.scene ?? ''];
+    return scene ? [() => scene(section, section.getBoundingClientRect().top > window.innerHeight)] : [];
   });
-  return () => context.revert();
+  const next = () => {
+    const setUp = pending.shift();
+    if (cancelled || !setUp) return;
+    context.add(setUp);
+    setTimeout(next, 0);
+  };
+  next();
+
+  return () => {
+    cancelled = true;
+    context.revert();
+  };
 }

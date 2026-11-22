@@ -13,14 +13,20 @@ export function MotionBoot() {
 
     let cancelled = false;
     let cleanup: (() => void) | undefined;
-    const start = () => {
-      void import('./scenes').then((scenes) => {
-        if (!cancelled) cleanup = scenes.startScenes();
-      });
+    const yieldToBrowser = () => new Promise<void>((resolve) => setTimeout(resolve, 0));
+    // Each module is fetched and evaluated in its own task, so a slow phone never gets one long block.
+    const start = async () => {
+      await import('gsap');
+      await yieldToBrowser();
+      await import('gsap/ScrollTrigger');
+      await yieldToBrowser();
+      const scenes = await import('./scenes');
+      await yieldToBrowser();
+      if (!cancelled) cleanup = scenes.startScenes();
     };
     const whenIdle = () => {
-      if ('requestIdleCallback' in window) window.requestIdleCallback(start, { timeout: 2000 });
-      else setTimeout(start, 1);
+      if ('requestIdleCallback' in window) window.requestIdleCallback(() => void start(), { timeout: 2000 });
+      else setTimeout(() => void start(), 1);
     };
 
     if (document.readyState === 'complete') whenIdle();
