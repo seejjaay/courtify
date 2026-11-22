@@ -81,6 +81,20 @@ defineScene('dashboard', (section, fromBelow) => {
     .from(section.querySelector('[data-verify]'), { rotateX: 90, duration: 0.4, ease: 'back.out(2)' }, '+=0.2');
 });
 
+// The closing call to action: the ball rolls in from the left and stops at the button.
+defineScene('cta-roll', (section, fromBelow) => {
+  const ball = section.querySelector('[data-roll-ball]');
+  if (!ball || !fromBelow) return;
+  gsap.from(ball, {
+    x: () => -Math.min(section.clientWidth * 0.5, 320),
+    rotate: -360,
+    opacity: 0,
+    duration: 1,
+    ease: 'power2.out',
+    scrollTrigger: { trigger: section, start: 'top 70%', once: true },
+  });
+});
+
 /**
  * Sets up every scene on the page and returns a cleanup. Sections are finished in the HTML;
  * a scene only sets "from" states for sections that are still below the viewport, so nothing

@@ -39,6 +39,23 @@ test('owners section is labelled as a product preview and links onward', async (
   await expect(owners.getByRole('link', { name: 'See how it works for venues' })).toHaveAttribute('href', '/for-venues');
 });
 
+test('pricing shows the platform settings', async ({ page }) => {
+  await page.goto('/');
+  const pricing = page.getByRole('region', { name: 'Free to list. Pro when you want bookings.' });
+  const pro = pricing.getByRole('article', { name: 'Pro' });
+  await expect(pro).toContainText('₱999');
+  await expect(pro).toContainText('₱9,990');
+  await expect(pro).toContainText('30-day');
+  await expect(pricing.getByRole('article', { name: 'Free listing' })).toBeVisible();
+});
+
+test('closing call to action offers both doors', async ({ page }) => {
+  await page.goto('/');
+  const closing = page.getByRole('region', { name: 'Your court. Your time. Your game.' });
+  await expect(closing.getByRole('link', { name: 'Find a court' })).toHaveAttribute('href', '/courts');
+  await expect(closing.getByRole('link', { name: 'List your venue' })).toHaveAttribute('href', '/owner/new');
+});
+
 // Review Focus 3: small Android phones.
 test('fits a 320px phone', async ({ page }) => {
   await page.setViewportSize({ width: 320, height: 640 });
